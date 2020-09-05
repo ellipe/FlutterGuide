@@ -5,8 +5,15 @@ void main() {
 }
 
 class MyPersonalApp extends StatelessWidget {
-  void answerQuestion(String question){
-    print('Answer chosen!: $question');
+  int questionIndex = 0;
+
+  var questions = [
+      "What's your favorite color?",
+      "What's your favorite animal?"
+    ];
+
+  void answerQuestion(int questionNumber){
+    print('Answer chosen!: ${questions[questionNumber]}');
   }
 
   @override
@@ -18,18 +25,18 @@ class MyPersonalApp extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Text('The question!'),
+            Text(questions[0]),
             RaisedButton(
               child: Text('Answer 1'),
-              onPressed: () => answerQuestion('one'),
+              onPressed: () => answerQuestion(0),
             ),
             RaisedButton(
               child: Text('Answer 2'),
-              onPressed: () => answerQuestion('two'),
+              onPressed: () => answerQuestion(1),
             ),
             RaisedButton(
               child: Text('Answer 3'),
-              onPressed: () => answerQuestion('three'),
+              onPressed: () => answerQuestion(2),
             ),
           ],
         ),
