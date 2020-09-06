@@ -17,15 +17,34 @@ class _MyPersonalAppState extends State<MyPersonalApp> {
   int _questionIndex = 0;
 
   var questions = [
-    "What's your favorite color?",
-    "What's your favorite animal?"
+    {
+      'questionText': "What's your favorite color?",
+      'answers': [
+        'Black',
+        'Blue',
+        'Red',
+        'Blue',
+      ]
+    },
+    {
+      'questionText': "What's your favorite animal?",
+      'answers': [
+        'Cat',
+        'Dog',
+        'Elephant',
+        'Birds',
+      ]
+    }
   ];
 
-  void _answerQuestion(int questionNumber) {
+  void _answerQuestion() {
     setState(() {
-      _questionIndex = questionNumber;
+      if (_questionIndex >= 1) {
+        _questionIndex = 0;
+      } else {
+        _questionIndex++;
+      }
     });
-    print('Answer chosen!: ${questions[questionNumber]}');
   }
 
   @override
@@ -40,14 +59,16 @@ class _MyPersonalAppState extends State<MyPersonalApp> {
             child: Column(
               children: [
                 Question(
-                  questions[_questionIndex],
+                  questions[_questionIndex]['questionText'],
                 ),
-                Answer(
-                    answerText: 'Answer 1',
-                    selectHandler: () => _answerQuestion(0)),
-                Answer(
-                    answerText: 'Answer 2',
-                    selectHandler: () => _answerQuestion(1)),
+                ...(questions[_questionIndex]['answers'] as List<String>)
+                    .map(
+                      (answer) => Answer(
+                        answerText: answer,
+                        selectHandler: () => _answerQuestion(),
+                      ),
+                    )
+                    .toList()
               ],
             ),
           )),
