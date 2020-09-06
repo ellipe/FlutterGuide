@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'question.dart';
+import 'answer.dart';
 
 void main() {
   runApp(MyPersonalApp());
@@ -31,25 +32,25 @@ class _MyPersonalAppState extends State<MyPersonalApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('My Personal App'),
-        ),
-        body: Column(
-          children: [
-            Question(
-              questions[_questionIndex],
+          appBar: AppBar(
+            title: Text('One Thousand Questions...'),
+          ),
+          body: Container(
+            margin: EdgeInsets.all(10),
+            child: Column(
+              children: [
+                Question(
+                  questions[_questionIndex],
+                ),
+                Answer(
+                    answerText: 'Answer 1',
+                    selectHandler: () => _answerQuestion(0)),
+                Answer(
+                    answerText: 'Answer 2',
+                    selectHandler: () => _answerQuestion(1)),
+              ],
             ),
-            RaisedButton(
-              child: Text('Answer 1'),
-              onPressed: () => _answerQuestion(0),
-            ),
-            RaisedButton(
-              child: Text('Answer 2'),
-              onPressed: () => _answerQuestion(1),
-            ),
-          ],
-        ),
-      ),
+          )),
     );
   }
 }
