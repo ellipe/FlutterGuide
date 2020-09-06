@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'question.dart';
 
 void main() {
   runApp(MyPersonalApp());
@@ -15,11 +16,11 @@ class _MyPersonalAppState extends State<MyPersonalApp> {
   int _questionIndex = 0;
 
   var questions = [
-      "What's your favorite color?",
-      "What's your favorite animal?"
-    ];
+    "What's your favorite color?",
+    "What's your favorite animal?"
+  ];
 
-  void _answerQuestion(int questionNumber){
+  void _answerQuestion(int questionNumber) {
     setState(() {
       _questionIndex = questionNumber;
     });
@@ -35,7 +36,9 @@ class _MyPersonalAppState extends State<MyPersonalApp> {
         ),
         body: Column(
           children: [
-            Text(questions[_questionIndex]),
+            Question(
+              questions[_questionIndex],
+            ),
             RaisedButton(
               child: Text('Answer 1'),
               onPressed: () => _answerQuestion(0),
