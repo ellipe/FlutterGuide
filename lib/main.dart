@@ -4,7 +4,14 @@ void main() {
   runApp(MyPersonalApp());
 }
 
-class MyPersonalApp extends StatelessWidget {
+class MyPersonalApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return MyPersonalAppState();
+  }
+}
+
+class MyPersonalAppState extends State<MyPersonalApp> {
   int questionIndex = 0;
 
   var questions = [
@@ -13,6 +20,9 @@ class MyPersonalApp extends StatelessWidget {
     ];
 
   void answerQuestion(int questionNumber){
+    setState(() {
+      questionIndex = questionNumber;
+    });
     print('Answer chosen!: ${questions[questionNumber]}');
   }
 
@@ -25,7 +35,7 @@ class MyPersonalApp extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Text(questions[0]),
+            Text(questions[questionIndex]),
             RaisedButton(
               child: Text('Answer 1'),
               onPressed: () => answerQuestion(0),
