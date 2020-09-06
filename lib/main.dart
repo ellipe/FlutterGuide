@@ -7,21 +7,21 @@ void main() {
 class MyPersonalApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MyPersonalAppState();
+    return _MyPersonalAppState();
   }
 }
 
-class MyPersonalAppState extends State<MyPersonalApp> {
-  int questionIndex = 0;
+class _MyPersonalAppState extends State<MyPersonalApp> {
+  int _questionIndex = 0;
 
   var questions = [
       "What's your favorite color?",
       "What's your favorite animal?"
     ];
 
-  void answerQuestion(int questionNumber){
+  void _answerQuestion(int questionNumber){
     setState(() {
-      questionIndex = questionNumber;
+      _questionIndex = questionNumber;
     });
     print('Answer chosen!: ${questions[questionNumber]}');
   }
@@ -35,18 +35,14 @@ class MyPersonalAppState extends State<MyPersonalApp> {
         ),
         body: Column(
           children: [
-            Text(questions[questionIndex]),
+            Text(questions[_questionIndex]),
             RaisedButton(
               child: Text('Answer 1'),
-              onPressed: () => answerQuestion(0),
+              onPressed: () => _answerQuestion(0),
             ),
             RaisedButton(
               child: Text('Answer 2'),
-              onPressed: () => answerQuestion(1),
-            ),
-            RaisedButton(
-              child: Text('Answer 3'),
-              onPressed: () => answerQuestion(2),
+              onPressed: () => _answerQuestion(1),
             ),
           ],
         ),
