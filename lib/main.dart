@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'question.dart';
-import 'answer.dart';
+import 'package:flutter_guide/quiz.dart';
+import 'quiz.dart';
+import 'result.dart';
 
 void main() {
   runApp(MyPersonalApp());
@@ -15,35 +16,43 @@ class MyPersonalApp extends StatefulWidget {
 
 class _MyPersonalAppState extends State<MyPersonalApp> {
   int _questionIndex = 0;
+  int _totalScore = 0;
 
-  var questions = [
+  var _questions = [
     {
       'questionText': "What's your favorite color?",
       'answers': [
-        'Black',
-        'Blue',
-        'Red',
-        'Blue',
+        {'text':'Black', 'score': 20},
+        {'text':'Blue', 'score': 10},
+        {'text':'Red', 'score': 5},
+        {'text':'Blue', 'score': 2},
       ]
     },
     {
       'questionText': "What's your favorite animal?",
       'answers': [
-        'Cat',
-        'Dog',
-        'Elephant',
-        'Birds',
+        {'text':'Cat', 'score': 20},
+        {'text':'Dog', 'score': 10},
+        {'text':'Elephant', 'score': 5},
+        {'text':'Birds', 'score': 1},
       ]
     }
   ];
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    _totalScore += score;
+
     setState(() {
-      if (_questionIndex >= 1) {
-        _questionIndex = 0;
-      } else {
+      if (_questionIndex < _questions.length) {
         _questionIndex++;
       }
+    });
+  }
+
+  void _resetGame() {
+    setState(() {
+     _questionIndex = 0;
+     _totalScore = 0;
     });
   }
 
@@ -51,27 +60,20 @@ class _MyPersonalAppState extends State<MyPersonalApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-            title: Text('One Thousand Questions...'),
-          ),
-          body: Container(
-            margin: EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Question(
-                  questions[_questionIndex]['questionText'],
-                ),
-                ...(questions[_questionIndex]['answers'] as List<String>)
-                    .map(
-                      (answer) => Answer(
-                        answerText: answer,
-                        selectHandler: () => _answerQuestion(),
-                      ),
-                    )
-                    .toList()
-              ],
-            ),
-          )),
+        appBar: AppBar(
+          title: Text('One Thousand Questions...'),
+        ),
+        body: _questionIndex < _questions.length
+            ? Quiz(
+                questions: _questions,
+                answerQuestion: _answerQuestion,
+                questionIndex: _questionIndex,
+              )
+            : Result(
+                totalScore: _totalScore,
+                resetGame: _resetGame,
+              ),
+      ),
     );
   }
 }
